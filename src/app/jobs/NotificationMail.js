@@ -8,8 +8,8 @@ class FuncionalidadeExp {
     async handle({ data }) {
         const {
             deliverymanExists: deliveryman,
-            packageCreated,
             recipientExists: recipient,
+            delivery,
         } = data;
 
         await Mail.sendMail({
@@ -18,7 +18,7 @@ class FuncionalidadeExp {
             template: 'notification',
             context: {
                 deliveryman: deliveryman.name,
-                product: packageCreated.product,
+                product: delivery.product,
                 name: recipient.destinatary_name,
                 street: recipient.street,
                 number: recipient.number,

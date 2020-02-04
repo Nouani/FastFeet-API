@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import Package from '../models/Package';
+import Delivery from '../models/Delivery';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
@@ -8,11 +8,11 @@ import File from '../models/File';
 import NotificationMail from '../jobs/NotificationMail';
 import Queue from '../../lib/Queue';
 
-class PackageController {
+class DeliveryController {
     async index(req, res) {
-        const packages = await Package.findAll();
+        const deliveries = await Delivery.findAll();
 
-        return res.json(packages);
+        return res.json(deliveries);
     }
 
     async store(req, res) {
@@ -40,24 +40,24 @@ class PackageController {
             return res.status(404).json({ error: 'Deliveryman not found' });
         }
 
-        const packageCreated = await Package.create(req.body);
+        const delivery = await Delivery.create(req.body);
 
         await Queue.add(NotificationMail.key, {
             deliverymanExists,
-            packageCreated,
+            delivery,
             recipientExists,
         });
 
-        return res.json(packageCreated);
+        return res.json(delivery);
     }
 
     async update(req, res) {
         const { id } = req.params;
 
-        const packageSearched = await Package.findByPk(id);
+        const delivery = await Delivery.findByPk(id);
 
-        if (!packageSearched) {
-            return res.status(404).json({ error: 'Package not found' });
+        if (!delivery) {
+            return res.status(404).json({ error: 'Delivery not found' });
         }
 
         const schema = Yup.object().shape({
@@ -76,7 +76,7 @@ class PackageController {
 
         const { recipient_id, deliveryman_id, signature_id } = req.body;
 
-        if (recipient_id && packageSearched.recipient_id !== recipient_id) {
+        if (recipient_id && delivery.recipient_id !== recipient_id) {
             const recipientExists = await Recipient.findByPk(recipient_id);
 
             if (!recipientExists) {
@@ -84,10 +84,7 @@ class PackageController {
             }
         }
 
-        if (
-            deliveryman_id &&
-            packageSearched.deliveryman_id !== deliveryman_id
-        ) {
+        if (deliveryman_id && delivery.deliveryman_id !== deliveryman_id) {
             const deliverymanExists = await Deliveryman.findByPk(
                 deliveryman_id
             );
@@ -97,7 +94,7 @@ class PackageController {
             }
         }
 
-        if (signature_id && packageSearched.signature_id !== signature_id) {
+        if (signature_id && delivery.signature_id !== signature_id) {
             const signatureExists = await File.findByPk(signature_id);
 
             if (!signatureExists) {
@@ -105,24 +102,24 @@ class PackageController {
             }
         }
 
-        const packageUpdated = await packageSearched.update(req.body);
+        const deliveryUpdated = await delivery.update(req.body);
 
-        return res.json(packageUpdated);
+        return res.json(deliveryUpdated);
     }
 
     async destroy(req, res) {
         const { id } = req.params;
 
-        const packageSearched = await Package.findByPk(id);
+        const delivery = await Delivery.findByPk(id);
 
-        if (!packageSearched) {
-            return res.status(404).json({ error: 'Package not found' });
+        if (!delivery) {
+            return res.status(404).json({ error: 'Delivery not found' });
         }
 
-        await packageSearched.destroy();
+        await delivery.destroy();
 
-        return res.json({ message: 'Package removed with success' });
+        return res.json({ message: 'Delivery removed with success' });
     }
 }
 
-export default new PackageController();
+export default new DeliveryController();
