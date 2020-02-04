@@ -96,14 +96,6 @@ class DeliveryController {
     }
 
     async update(req, res) {
-        const { id } = req.params;
-
-        const delivery = await Delivery.findByPk(id);
-
-        if (!delivery) {
-            return res.status(404).json({ error: 'Delivery not found' });
-        }
-
         const schema = Yup.object().shape({
             recipient_id: Yup.number(),
             deliveryman_id: Yup.number(),
@@ -116,6 +108,14 @@ class DeliveryController {
 
         if (!(await schema.isValid(req.body))) {
             return res.status(400).json({ error: 'Validation fails' });
+        }
+
+        const { id } = req.params;
+
+        const delivery = await Delivery.findByPk(id);
+
+        if (!delivery) {
+            return res.status(404).json({ error: 'Delivery not found' });
         }
 
         const { recipient_id, deliveryman_id, signature_id } = req.body;
