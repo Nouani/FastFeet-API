@@ -10,7 +10,47 @@ import Queue from '../../lib/Queue';
 
 class DeliveryController {
     async index(req, res) {
-        const deliveries = await Delivery.findAll();
+        const deliveries = await Delivery.findAll({
+            attributes: [
+                'id',
+                'recipient_id',
+                'deliveryman_id',
+                'signature_id',
+                'product',
+                'canceled_at',
+                'start_date',
+                'end_date',
+            ],
+            include: [
+                {
+                    model: Recipient,
+                    attributes: [
+                        'destinatary_name',
+                        'street',
+                        'number',
+                        'complement',
+                        'state',
+                        'city',
+                        'zip_code',
+                    ],
+                },
+                {
+                    model: Deliveryman,
+                    include: [
+                        {
+                            model: File,
+                            as: 'avatar',
+                        },
+                    ],
+                    attributes: ['name', 'email'],
+                },
+                {
+                    model: File,
+                    as: 'signature',
+                    attributes: ['name', 'path'],
+                },
+            ],
+        });
 
         return res.json(deliveries);
     }
