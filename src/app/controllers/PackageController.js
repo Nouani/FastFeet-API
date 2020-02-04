@@ -5,6 +5,8 @@ import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 
+import Mail from '../../lib/Mail';
+
 class PackageController {
     async index(req, res) {
         const packages = await Package.findAll();
@@ -38,6 +40,23 @@ class PackageController {
         }
 
         const packageCreated = await Package.create(req.body);
+
+        await Mail.sendMail({
+            to: `${deliverymanExists.name} <${deliverymanExists.email}>`,
+            subject: 'Nova encomenda disponível para retirada',
+            template: 'notification',
+            context: {
+                deliveryman: deliverymanExists.name,
+                product: packageCreated.product,
+                name: recipientExists.destinatary_name,
+                street: recipientExists.street,
+                number: recipientExists.number,
+                complement: recipientExists.complement,
+                state: recipientExists.state,
+                city: recipientExists.city,
+                zipcode: recipientExists.zip_code,
+            },
+        });
 
         return res.json(packageCreated);
     }
