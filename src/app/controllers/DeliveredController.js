@@ -63,7 +63,7 @@ class DeliveredController {
             signature_id: file.id,
         });
 
-        delivery.reload({
+        await delivery.reload({
             attributes: [
                 'id',
                 'recipient_id',

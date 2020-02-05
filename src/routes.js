@@ -9,6 +9,7 @@ import DeliveryController from './app/controllers/DeliveryController';
 import ShowController from './app/controllers/ShowController';
 import WithdrawController from './app/controllers/WithdrawController';
 import DeliveredController from './app/controllers/DeliveredController';
+import DeliveryProblemController from './app/controllers/DeliveryProblemController';
 
 import authMiddleware from './app/middlewares/auth';
 import multerConfig from './config/multer';
@@ -29,6 +30,8 @@ routes.put(
     DeliveredController.update
 );
 
+routes.post('/delivery/:delivery_id/problems', DeliveryProblemController.store);
+
 routes.use(authMiddleware);
 
 routes.post('/recipients', RecipientController.store);
@@ -43,6 +46,10 @@ routes.get('/deliveries', DeliveryController.index);
 routes.post('/deliveries', DeliveryController.store);
 routes.put('/deliveries/:id', DeliveryController.update);
 routes.delete('/deliveries/:id', DeliveryController.destroy);
+
+routes.get('/deliveries/problems', DeliveryProblemController.index);
+routes.get('/delivery/:delivery_id/problems', DeliveryProblemController.show);
+routes.delete('/problem/:id/cancel-delivery', DeliveryProblemController.update);
 
 routes.post('/files', upload.single('file'), FileController.store);
 

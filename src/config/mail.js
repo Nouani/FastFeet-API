@@ -3,8 +3,8 @@ export default {
     port: 2525,
     secure: false,
     auth: {
-        user: 'ba14137978a45e',
-        pass: '65cdbc8a1d673a',
+        user: '3aa2da0e54d442',
+        pass: 'd63536a4b33da0',
     },
     default: {
         from: 'Equipe FastFeet <noreply@fastfeet.com>',
