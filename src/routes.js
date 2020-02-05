@@ -8,6 +8,7 @@ import FileController from './app/controllers/FileController';
 import DeliveryController from './app/controllers/DeliveryController';
 import ShowController from './app/controllers/ShowController';
 import WithdrawController from './app/controllers/WithdrawController';
+import DeliveredController from './app/controllers/DeliveredController';
 
 import authMiddleware from './app/middlewares/auth';
 import multerConfig from './config/multer';
@@ -21,6 +22,11 @@ routes.get('/deliveryman/:id/deliveries', ShowController.index);
 routes.put(
     '/deliveryman/:deliveryman_id/withdraw/:delivery_id',
     WithdrawController.update
+);
+routes.put(
+    '/deliveryman/:deliveryman_id/delivered/:delivery_id',
+    upload.single('file'),
+    DeliveredController.update
 );
 
 routes.use(authMiddleware);
