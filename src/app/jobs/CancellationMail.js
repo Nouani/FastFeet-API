@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import Mail from '../../lib/Mail';
@@ -19,7 +19,7 @@ class CancellationMail {
                 deliveryman: delivery.Deliveryman.name,
                 product: delivery.product,
                 date: format(
-                    delivery.canceled_at,
+                    parseISO(delivery.canceled_at),
                     "'dia' dd 'de' MMMM',' 'às' HH:mm'h'",
                     { locale: pt }
                 ),
@@ -27,3 +27,5 @@ class CancellationMail {
         });
     }
 }
+
+export default new CancellationMail();
