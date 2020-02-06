@@ -31,7 +31,8 @@
   <a href="#page_with_curl-description">Description</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-how-to-use">How To Use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#blue_book-references">References</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#person_with_blond_hair-author-info">Author Info</a>
+  <a href="#person_with_blond_hair-author-info">Author Info</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#memo-license">License</a>
 </p>
 
 ## :page_with_curl: Description
@@ -89,5 +90,8 @@ $ yarn queue
 
 - Twitter - [@sanches_coo](https://twitter.com/sanches_coo)
 - LinkedIn - [Nouani Sanches](https://www.linkedin.com/in/nouani-sanches-a8b39419b/m)
+
+## :memo: License
+This project is under the MIT license. See the [LICENSE](https://github.com/Nouani/FastFeet-API/blob/master/LICENSE) for more information.
 
 
