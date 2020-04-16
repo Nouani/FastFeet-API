@@ -34,8 +34,10 @@ routes.post('/delivery/:delivery_id/problems', DeliveryProblemController.store);
 
 routes.use(authMiddleware);
 
+routes.get('/recipients', RecipientController.index);
 routes.post('/recipients', RecipientController.store);
 routes.put('/recipients/:id', RecipientController.update);
+routes.delete('/recipients/:id', RecipientController.destroy);
 
 routes.get('/deliverymen', DeliverymanController.index);
 routes.post('/deliverymen', DeliverymanController.store);

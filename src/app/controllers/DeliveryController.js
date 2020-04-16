@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 
 import Delivery from '../models/Delivery';
@@ -10,9 +11,14 @@ import Queue from '../../lib/Queue';
 
 class DeliveryController {
     async index(req, res) {
-        const { page = 1 } = req.query;
+        const { page = 1, search = '' } = req.query;
 
         const deliveries = await Delivery.findAll({
+            where: {
+                product: {
+                    [Op.like]: `%${search}`,
+                },
+            },
             limit: 20,
             offset: (page - 1) * 20,
             attributes: [
