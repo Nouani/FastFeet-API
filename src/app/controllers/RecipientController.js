@@ -10,7 +10,7 @@ class RecipientController {
         const recipients = await Recipient.findAll({
             where: {
                 destinatary_name: {
-                    [Op.like]: `%${search}`,
+                    [Op.like]: `${search}%`,
                 },
             },
             limit: 20,

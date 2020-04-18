@@ -11,7 +11,7 @@ class DeliverymanController {
         const deliverymen = await Deliveryman.findAll({
             where: {
                 name: {
-                    [Op.like]: `%${search}`,
+                    [Op.like]: `${search}%`,
                 },
             },
             limit: 20,

@@ -16,7 +16,7 @@ class DeliveryController {
         const deliveries = await Delivery.findAll({
             where: {
                 product: {
-                    [Op.like]: `%${search}`,
+                    [Op.like]: `${search}%`,
                 },
             },
             limit: 20,
